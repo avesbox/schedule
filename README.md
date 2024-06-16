@@ -8,7 +8,7 @@ A module for Serinus applications 🐤 to serve static files.
 ## Installation
 
 ```bash
-dart pub add serinus_serve_static
+dart pub add serinus_cron
 ```
 
 ## Usage

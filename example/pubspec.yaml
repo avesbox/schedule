@@ -7,5 +7,5 @@ environment:
 
 dependencies:
   serinus: ^0.4.1
-  serinus_serve_static: ^1.0.1
+  serinus_cron: ^1.0.0
   
