@@ -1,0 +1,21 @@
+name: serinus_cron
+description: "A Serinus Plugin to execute cron-like jobs in a Dart server."
+version: 1.0.0
+repository: https://github.com/serinus-nest/cron
+homepage: https://github.com/serinus-nest
+documentation: https://docs.serinus.app/plugins/cron.html
+tag: 
+  - server
+  - cron
+  - backend
+  - web
+  - http
+
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  cron: ^0.6.0
+  serinus: ^0.4.1
+  
