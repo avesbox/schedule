@@ -1,9 +1,9 @@
 
 [![Serinus Logo][logo_white]][repo_link]
 
-# Serinus Serve Static
+# Serinus Cron
 
-A module for Serinus applications 🐤 to serve static files.
+A module for Serinus applications 🐤 to execute cron-like jobs in a Serinus application.
 
 ## Installation
 
