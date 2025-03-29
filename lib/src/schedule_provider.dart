@@ -3,29 +3,38 @@ import 'package:serinus/serinus.dart';
 
 class ScheduleProvider extends Provider {
 
-  final Cron cron = Cron();
+  final Cron _cron = Cron();
 
   final Map<String, ScheduledTask> _tasks = {};
 
   ScheduleProvider();
 
-  String schedule(
+  void schedule(
+    String name, 
     String cronExpression, 
-    Function() callback,
+    {
+      required Future<void> Function() callback,
+    }
   ) {
-    final now = DateTime.now();
-    ScheduledTask task = cron.schedule(Schedule.parse(cronExpression), callback);
-    _tasks['${now.microsecondsSinceEpoch}'] = task;
-    return '${now.microsecondsSinceEpoch}';
+    if(_tasks.containsKey(name)) {
+      return;
+    }
+    ScheduledTask task = _cron.schedule(Schedule.parse(cronExpression), callback);
+    _tasks[name] = task;
   }
 
   Future<bool> cancel(String taskId) async {
     final task = _tasks[taskId];
     if (task != null) {
       await task.cancel();
+      remove(taskId);
       return true;
     }
     return false;
+  }
+
+  ScheduledTask? get(String taskId) {
+    return _tasks[taskId];
   }
 
   Future<void> remove(String taskId) async {
@@ -33,7 +42,7 @@ class ScheduleProvider extends Provider {
   }
 
   Future<void> stopScheduler() async {
-    await cron.close();
+    await _cron.close();
   }
 
 }

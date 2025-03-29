@@ -13,9 +13,9 @@ tag:
 
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
 
 dependencies:
   cron: ^0.6.1
-  serinus: ^0.4.1
+  serinus: ^1.0.3
   

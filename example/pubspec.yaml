@@ -6,6 +6,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  serinus: ^0.4.1
-  serinus_cron: ^1.0.0
+  serinus: ^1.0.3
+  serinus_cron: 
+    path: ../
   

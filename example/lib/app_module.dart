@@ -1,5 +1,5 @@
 import 'package:serinus/serinus.dart';
-import 'package:serinus_serve_static/serinus_serve_static.dart';
+import 'package:serinus_cron/serinus_cron.dart';
 
 import 'app_controller.dart';
 import 'app_provider.dart';
@@ -7,7 +7,7 @@ import 'app_provider.dart';
 class AppModule extends Module {
   AppModule()
       : super(
-          imports: [ServeStaticModule()],
+          imports: [ScheduleModule()],
           controllers: [AppController()],
           providers: [AppProvider()],
         );
