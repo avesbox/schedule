@@ -8,15 +8,7 @@ import 'schedule_registry.dart';
 ///
 /// You can also use the constructor to initialize any dependencies that your plugin may have.
 class ScheduleModule extends Module {
-
   /// The [ScheduleModule] constructor is used to create a new instance of the [ScheduleModule] class.
-  ScheduleModule() : super(
-    providers: [
-      ScheduleRegistry()
-    ],
-    exports: [
-      ScheduleRegistry
-    ]
-  );
-
+  ScheduleModule()
+      : super(providers: [ScheduleRegistry()], exports: [ScheduleRegistry]);
 }
