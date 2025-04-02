@@ -1,5 +1,5 @@
 import 'package:serinus/serinus.dart';
-import 'package:serinus_cron/src/schedule_provider.dart';
+import 'schedule_registry.dart';
 
 /// This module is a representation of the entrypoint of your plugin.
 /// It is the main class that will be used to register your plugin with the application.
@@ -12,10 +12,10 @@ class ScheduleModule extends Module {
   /// The [ScheduleModule] constructor is used to create a new instance of the [ScheduleModule] class.
   ScheduleModule() : super(
     providers: [
-      ScheduleProvider()
+      ScheduleRegistry()
     ],
     exports: [
-      ScheduleProvider
+      ScheduleRegistry
     ]
   );
 

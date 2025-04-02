@@ -1,26 +1,24 @@
 import 'package:serinus/serinus.dart';
-import 'package:serinus_cron/serinus_cron.dart';
+import 'package:serinus_schedule/serinus_schedule.dart';
 
 class AppProvider extends Provider with OnApplicationInit, OnApplicationShutdown{
 
-  final ScheduleProvider scheduleProvider;
-
-  String _taskId = '';
+  final ScheduleRegistry scheduleProvider;
 
   AppProvider({required this.scheduleProvider});
   
   @override
   Future<void> onApplicationInit() async {
-    _taskId = scheduleProvider.schedule('*/1 * * * *', () {
+    scheduleProvider.addCronJob('hello', '*/1 * * * *', callback: () async {
       print('Hello World');
     });
 
-    print('Task ID: $_taskId');
+    print('Task ID hello');
   }
 
   @override
   Future<void> onApplicationShutdown() async {
-    await scheduleProvider.cancel(_taskId);
+    await scheduleProvider.cancelCronJob('hello');
   }
 
 }
@@ -32,8 +30,9 @@ class AppModule extends Module {
     ],
     providers: [
       DeferredProvider(
-        (context) async => AppProvider(scheduleProvider: context.use<ScheduleProvider>()), 
-        inject: [ScheduleProvider]
+        (ScheduleRegistry registry) async => AppProvider(scheduleProvider: registry), 
+        inject: [ScheduleRegistry],
+        type: AppProvider
       )
     ]
   );

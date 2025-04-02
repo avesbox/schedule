@@ -7,6 +7,6 @@ environment:
 
 dependencies:
   serinus: ^1.0.3
-  serinus_cron: 
+  serinus_schedule: 
     path: ../
   

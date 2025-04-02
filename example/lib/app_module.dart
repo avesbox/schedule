@@ -1,5 +1,5 @@
 import 'package:serinus/serinus.dart';
-import 'package:serinus_cron/serinus_cron.dart';
+import 'package:serinus_schedule/serinus_schedule.dart';
 
 import 'app_controller.dart';
 import 'app_provider.dart';
