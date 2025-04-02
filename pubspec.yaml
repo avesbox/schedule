@@ -1,9 +1,9 @@
 name: serinus_schedule
 description: "A Serinus Plugin to execute cron-like jobs, timeouts and intervals in a Dart server."
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/avesbox/schedule
 homepage: https://github.com/avesbox
-documentation: https://serinus.app/technique/task_scheduling.html
+documentation: https://serinus.app/techniques/task_scheduling.html
 tag: 
   - server
   - cron
