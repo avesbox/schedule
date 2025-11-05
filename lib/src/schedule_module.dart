@@ -8,7 +8,24 @@ import 'schedule_registry.dart';
 ///
 /// You can also use the constructor to initialize any dependencies that your plugin may have.
 class ScheduleModule extends Module {
+  /// A list of scheduled cron tasks to be registered when the module is initialized.
+  final List<ScheduledCronTask> scheduledCronTasks;
+
   /// The [ScheduleModule] constructor is used to create a new instance of the [ScheduleModule] class.
-  ScheduleModule()
-      : super(providers: [ScheduleRegistry()], exports: [ScheduleRegistry]);
+  ScheduleModule({this.scheduledCronTasks = const []}) : super(exports: [ScheduleRegistry]);
+
+  Future<DynamicModule> registerAsync(ApplicationConfig config) async {
+    final registry = ScheduleRegistry();
+    for (final task in scheduledCronTasks) {
+      registry.addCronJob(
+        task.name,
+        task.cronExpression,
+        callback: task.callback,
+      );
+    }
+
+    return DynamicModule(providers: [
+      registry,
+    ]);
+  }
 }

@@ -1,8 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:serinus/serinus.dart';
 import 'package:serinus_schedule/serinus_schedule.dart';
 
-class AppProvider extends Provider
-    with OnApplicationInit, OnApplicationShutdown {
+class AppProvider extends Provider with OnApplicationInit, OnApplicationShutdown {
   final ScheduleRegistry scheduleProvider;
 
   AppProvider({required this.scheduleProvider});
@@ -27,11 +28,10 @@ class AppModule extends Module {
       : super(imports: [
           ScheduleModule()
         ], providers: [
-          DeferredProvider(
-              (ScheduleRegistry registry) async =>
-                  AppProvider(scheduleProvider: registry),
-              inject: [ScheduleRegistry],
-              type: AppProvider)
+          Provider.composed(
+            (CompositionContext context) async => AppProvider(scheduleProvider: context.use<ScheduleRegistry>()),
+            inject: [ScheduleRegistry],
+          )
         ]);
 }
 

@@ -3,6 +3,25 @@ import 'dart:async';
 import 'package:cron/cron.dart';
 import 'package:serinus/serinus.dart';
 
+/// The [ScheduledCronTask] class represents a scheduled task with a name, cron expression, and callback function.
+class ScheduledCronTask {
+  /// The [name] property is the name of the scheduled task.
+  final String name;
+
+  /// The [cronExpression] property is the cron expression that defines the schedule of the task.
+  final String cronExpression;
+
+  /// The [callback] property is a function that will be called when the task is executed.
+  final Future<void> Function() callback;
+
+  /// The [ScheduledCronTask] constructor initializes the scheduled task with a name, cron expression, and callback function.
+  const ScheduledCronTask({
+    required this.name,
+    required this.cronExpression,
+    required this.callback,
+  });
+}
+
 /// The [ScheduleRegistry] class is a provider that works as a registry for scheduling tasks using cron expressions, timeouts, and intervals.
 ///
 /// It allows you to add, remove, and manage scheduled tasks.
@@ -83,8 +102,7 @@ class ScheduleRegistry extends Provider {
   /// The [name] parameter is the name of the timeout.
   /// The [duration] parameter is the duration of the timeout.
   /// The [callback] parameter is a function that will be called when the timeout expires.
-  Timer addTimeout(String name, Duration duration,
-      {required Future<void> Function() callback}) {
+  Timer addTimeout(String name, Duration duration, {required Future<void> Function() callback}) {
     Timer timeout = Timer(duration, callback);
     if (_timeouts.containsKey(name)) {
       _timeouts[name]?.cancel();
@@ -122,8 +140,7 @@ class ScheduleRegistry extends Provider {
   /// The [name] parameter is the name of the interval.
   /// The [duration] parameter is the duration of the interval.
   /// The [callback] parameter is a function that will be called at each interval.
-  Timer addInterval(String name, Duration duration,
-      {required Future<void> Function() callback}) {
+  Timer addInterval(String name, Duration duration, {required Future<void> Function() callback}) {
     Timer interval = Timer.periodic(duration, (timer) async {
       await callback();
     });
@@ -244,8 +261,7 @@ class CronJob {
         bool changed = false;
 
         // Check seconds
-        if (schedule.seconds != null &&
-            !schedule.seconds!.contains(candidate.second)) {
+        if (schedule.seconds != null && !schedule.seconds!.contains(candidate.second)) {
           int? nextSecond = _findNextValue(schedule.seconds!, candidate.second);
           if (nextSecond != null) {
             if (nextSecond > candidate.second) {
@@ -275,8 +291,7 @@ class CronJob {
         }
 
         // Check minutes
-        if (schedule.minutes != null &&
-            !schedule.minutes!.contains(candidate.minute)) {
+        if (schedule.minutes != null && !schedule.minutes!.contains(candidate.minute)) {
           int? nextMinute = _findNextValue(schedule.minutes!, candidate.minute);
           if (nextMinute != null) {
             int firstSecond = schedule.seconds?.first ?? 0;
@@ -307,8 +322,7 @@ class CronJob {
         }
 
         // Similar checks for hours, days, months, weekdays
-        if (schedule.hours != null &&
-            !schedule.hours!.contains(candidate.hour)) {
+        if (schedule.hours != null && !schedule.hours!.contains(candidate.hour)) {
           int? nextHour = _findNextValue(schedule.hours!, candidate.hour);
           if (nextHour != null) {
             int firstMinute = schedule.minutes?.first ?? 0;
@@ -357,8 +371,7 @@ class CronJob {
               );
             } else {
               // Move to next month and use first day
-              int daysInNextMonth =
-                  _daysInMonth(candidate.year, candidate.month + 1);
+              int daysInNextMonth = _daysInMonth(candidate.year, candidate.month + 1);
               candidate = DateTime(
                 candidate.year,
                 candidate.month + 1,
@@ -373,8 +386,7 @@ class CronJob {
           }
         }
 
-        if (schedule.months != null &&
-            !schedule.months!.contains(candidate.month)) {
+        if (schedule.months != null && !schedule.months!.contains(candidate.month)) {
           int? nextMonth = _findNextValue(schedule.months!, candidate.month);
           if (nextMonth != null) {
             int firstDay = schedule.days?.first ?? 1;
@@ -407,10 +419,8 @@ class CronJob {
           }
         }
 
-        if (schedule.weekdays != null &&
-            !schedule.weekdays!.contains(candidate.weekday)) {
-          int? nextWeekday =
-              _findNextValue(schedule.weekdays!, candidate.weekday);
+        if (schedule.weekdays != null && !schedule.weekdays!.contains(candidate.weekday)) {
+          int? nextWeekday = _findNextValue(schedule.weekdays!, candidate.weekday);
           if (nextWeekday != null) {
             int firstHour = schedule.hours?.first ?? 0;
             int firstMinute = schedule.minutes?.first ?? 0;
@@ -459,7 +469,9 @@ class CronJob {
 
   // Helper function to find the next valid value in a list
   int? _findNextValue(List<int> values, int current) {
-    if (values.isEmpty) return null;
+    if (values.isEmpty) {
+      return null;
+    }
 
     // Find the next value greater than current
     int? next;

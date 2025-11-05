@@ -72,7 +72,7 @@ void main() {
 
     test(
       'registring a cronjob and calling the nextDate method should return the next iteration date',
-      () async {
+      () {
         fakeAsync((async) {
           final registry = ScheduleRegistry();
           final job = registry.addCronJob(
@@ -90,7 +90,7 @@ void main() {
 
     test(
       'registring a cronjob and calling the nextDate method should return the next iteration date',
-      () async {
+      () {
         fakeAsync((async) {
           final registry = ScheduleRegistry();
           final job = registry.addCronJob(

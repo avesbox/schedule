@@ -1,7 +1,11 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:serinus/serinus.dart';
 import 'package:serinus_schedule/serinus_schedule.dart';
 
 class AppController extends Controller {
+  final Logger logger = Logger('AppController');
+
   AppController({super.path = '/'}) {
     on(Route.get('/'), _handleHelloWorld);
     on(Route.get('/timeout'), _createTimeout);
@@ -15,31 +19,29 @@ class AppController extends Controller {
       'hello-world',
       '*/5 * * * * *',
       callback: () async {
-        print('Hello, World!');
+        logger.info('Hello, World!');
       },
     );
     return 'Hello, World!';
   }
 
   Future<String> _createTimeout(RequestContext context) async {
-    print('Creating timeout... ${DateTime.now()}');
     context.use<ScheduleRegistry>().addTimeout(
       'hello-world',
       Duration(seconds: 5),
       callback: () async {
-        print('Hello, World!');
+        logger.info('Hello, World from timeout!');
       },
     );
     return 'Hello, World!';
   }
 
   Future<String> _createInterval(RequestContext context) async {
-    print('Creating interval... ${DateTime.now()}');
     context.use<ScheduleRegistry>().addInterval(
       'hello-world',
       Duration(seconds: 5),
       callback: () async {
-        print('Hello, World from interval!');
+        logger.info('Hello, World from interval!');
       },
     );
     return 'Hello, World!';
@@ -60,9 +62,6 @@ class AppController extends Controller {
     final scheduleProvider = context.use<ScheduleRegistry>();
     final task = scheduleProvider.getCronJob(context.params['id']);
     if (task != null) {
-      print(task.lastRun);
-      print(task.nextDate());
-      print(task.nextDates(10));
       return task.nextDate().toIso8601String();
     } else {
       return 'Task not found.';
