@@ -12,7 +12,8 @@ class ScheduleModule extends Module {
   final List<ScheduledCronTask> scheduledCronTasks;
 
   /// The [ScheduleModule] constructor is used to create a new instance of the [ScheduleModule] class.
-  ScheduleModule({this.scheduledCronTasks = const []}) : super(exports: [ScheduleRegistry]);
+  ScheduleModule({this.scheduledCronTasks = const []})
+      : super(exports: [ScheduleRegistry]);
 
   Future<DynamicModule> registerAsync(ApplicationConfig config) async {
     final registry = ScheduleRegistry();

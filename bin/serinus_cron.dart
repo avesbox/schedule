@@ -3,7 +3,8 @@
 import 'package:serinus/serinus.dart';
 import 'package:serinus_schedule/serinus_schedule.dart';
 
-class AppProvider extends Provider with OnApplicationInit, OnApplicationShutdown {
+class AppProvider extends Provider
+    with OnApplicationInit, OnApplicationShutdown {
   final ScheduleRegistry scheduleProvider;
 
   AppProvider({required this.scheduleProvider});
@@ -29,7 +30,8 @@ class AppModule extends Module {
           ScheduleModule()
         ], providers: [
           Provider.composed(
-            (CompositionContext context) async => AppProvider(scheduleProvider: context.use<ScheduleRegistry>()),
+            (CompositionContext context) async =>
+                AppProvider(scheduleProvider: context.use<ScheduleRegistry>()),
             inject: [ScheduleRegistry],
           )
         ]);
